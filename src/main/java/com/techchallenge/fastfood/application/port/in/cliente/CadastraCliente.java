@@ -1,4 +1,4 @@
-package com.techchallenge.fastfood.application.port.in;
+package com.techchallenge.fastfood.application.port.in.cliente;
 
 import com.techchallenge.fastfood.adapters.driven.infra.entity.ClienteEntity;
 import com.techchallenge.fastfood.application.dto.CadastroClienteDTO;

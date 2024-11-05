@@ -1,8 +1,8 @@
 package com.techchallenge.fastfood.adapters.driver.api.controller;
 
 import com.techchallenge.fastfood.adapters.driven.infra.entity.ClienteEntity;
-import com.techchallenge.fastfood.application.port.in.BuscaClientePorCpf;
-import com.techchallenge.fastfood.application.port.in.CadastraCliente;
+import com.techchallenge.fastfood.application.port.in.cliente.BuscaClientePorCpf;
+import com.techchallenge.fastfood.application.port.in.cliente.CadastraCliente;
 import com.techchallenge.fastfood.application.dto.CadastroClienteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

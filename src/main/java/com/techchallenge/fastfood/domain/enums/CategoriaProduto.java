@@ -1,6 +1,6 @@
 package com.techchallenge.fastfood.domain.enums;
 
-public enum TipoItem {
+public enum CategoriaProduto {
     LANCHE(1,"Lanche"),
     ACOMPANHAMENTO(2,"Acompanhamento"),
     BEBIDA(3,"Bebida"),
@@ -9,5 +9,8 @@ public enum TipoItem {
     private int id;
     private String nome;
 
-    TipoItem(int id, String nome) {}
+    CategoriaProduto(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
 }
