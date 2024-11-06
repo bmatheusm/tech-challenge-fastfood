@@ -1,7 +1,7 @@
-package com.techchallenge.fastfood.application.usecase;
+package com.techchallenge.fastfood.application.usecase.cliente;
 
 import com.techchallenge.fastfood.adapters.driven.infra.entity.ClienteEntity;
-import com.techchallenge.fastfood.application.port.in.CadastraCliente;
+import com.techchallenge.fastfood.application.port.in.cliente.CadastraCliente;
 import com.techchallenge.fastfood.application.dto.CadastroClienteDTO;
 import com.techchallenge.fastfood.domain.repository.ClienteRepository;
 import com.techchallenge.fastfood.domain.utils.CpfUtils;

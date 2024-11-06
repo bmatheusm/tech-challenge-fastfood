@@ -1,21 +1,20 @@
 package com.techchallenge.fastfood.adapters.driven.infra.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.techchallenge.fastfood.domain.enums.TipoItem;
+import com.techchallenge.fastfood.domain.enums.CategoriaProduto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "item")
-public class ItemEntity {
+@Table(name = "produto")
+public class ProdutoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
@@ -32,8 +31,9 @@ public class ItemEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TipoItem tipo;
+    private CategoriaProduto categoria;
 
-    @ManyToMany(mappedBy = "itens")
-    private List<PedidoEntity> pedidos = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "pedido_id")
+    private PedidoEntity pedidoEntity;
 }

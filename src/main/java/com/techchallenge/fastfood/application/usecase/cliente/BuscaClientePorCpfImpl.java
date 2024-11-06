@@ -1,7 +1,7 @@
-package com.techchallenge.fastfood.application.usecase;
+package com.techchallenge.fastfood.application.usecase.cliente;
 
 import com.techchallenge.fastfood.adapters.driven.infra.entity.ClienteEntity;
-import com.techchallenge.fastfood.application.port.in.BuscaClientePorCpf;
+import com.techchallenge.fastfood.application.port.in.cliente.BuscaClientePorCpf;
 import com.techchallenge.fastfood.domain.repository.ClienteRepository;
 import com.techchallenge.fastfood.domain.utils.CpfUtils;
 import org.springframework.beans.factory.annotation.Autowired;
