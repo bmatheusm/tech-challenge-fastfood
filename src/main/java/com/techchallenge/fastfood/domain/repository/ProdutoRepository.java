@@ -7,14 +7,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 public interface ProdutoRepository {
 
     List<ProdutoEntity> findAllByCategoria(CategoriaProduto categoriaProduto);
 
     List<ProdutoEntity> findAllById(List<Long> ids);
 
-    Optional<ProdutoEntity> save(ProdutoEntity produtoDTO);
+    ProdutoEntity save(ProdutoEntity produtoEntity);
 
     void deleteById(Long id);
 

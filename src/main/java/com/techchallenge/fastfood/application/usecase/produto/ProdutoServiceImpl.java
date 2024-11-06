@@ -24,14 +24,14 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public Optional<ProdutoEntity> cadastrarProduto(ProdutoDTO produtoDTO) {
-        return this.produtoRepository.save(this.montaProduto(produtoDTO));
+        return Optional.of(this.produtoRepository.save(this.montaProduto(produtoDTO)));
     }
 
     @Override
     public Optional<ProdutoEntity> editarProduto(Long id, ProdutoDTO produtoDTO) {
         ProdutoEntity produto = this.montaProduto(produtoDTO);
         produto.setId(id);
-        return this.produtoRepository.save(produto);
+        return Optional.of(this.produtoRepository.save(produto));
     }
 
     @Override
