@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "pedido")
@@ -26,7 +27,6 @@ public class PedidoEntity {
     private StatusPedido statusPedido;
 
     @ManyToOne
-    @Setter
     @JoinColumn(name = "cliente_id")
     private ClienteEntity cliente;
 

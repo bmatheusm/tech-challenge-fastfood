@@ -12,6 +12,8 @@ public interface ProdutoRepository {
 
     List<ProdutoEntity> findAllByCategoria(CategoriaProduto categoriaProduto);
 
+    List<ProdutoEntity> findAllById(List<Long> ids);
+
     Optional<ProdutoEntity> save(ProdutoEntity produtoDTO);
 
     void deleteById(Long id);
