@@ -30,7 +30,12 @@ public class PedidoEntity {
     @JoinColumn(name = "cliente_id")
     private ClienteEntity cliente;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "pedido_produto",
+            joinColumns = @JoinColumn(name = "pedido_id"),
+            inverseJoinColumns = @JoinColumn(name = "produto_id")
+    )
     private List<ProdutoEntity> produtos;
 
 }

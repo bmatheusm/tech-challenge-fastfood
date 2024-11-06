@@ -19,8 +19,8 @@ public class ProdutoController {
     private ProdutoService produtoService;
 
     @GetMapping("/categoria/{categoria}")
-    public ResponseEntity<List<ProdutoEntity>> listaProdutosCategoria(@PathVariable CategoriaProduto categoriaProduto) {
-        return ResponseEntity.ok(produtoService.listarTodosDaCategoria(categoriaProduto));
+    public ResponseEntity<List<ProdutoEntity>> listaProdutosCategoria(@PathVariable CategoriaProduto categoria) {
+        return ResponseEntity.ok(produtoService.listarTodosDaCategoria(categoria));
     }
 
     @PostMapping

@@ -34,35 +34,35 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     public Optional<PedidoEntity> cadastrarPedido(PedidoDTO pedidoDTO) {
-        return this.montaPedido(pedidoDTO);
+        return Optional.of(pedidoRepository.save(this.montaPedido(pedidoDTO)));
     }
 
-    private Optional<PedidoEntity> montaPedido(PedidoDTO pedidoDTO) {
+    private PedidoEntity montaPedido(PedidoDTO pedidoDTO) {
         PedidoEntity pedido = new PedidoEntity();
 
         Optional<ClienteEntity> cliente = clienteRepository.findByCpf(pedidoDTO.getCpf());
         cliente.ifPresent(clienteEntity -> pedido.setCliente(clienteEntity));
 
-        List<ProdutoEntity> produtos = produtoRepository.findAllById(pedidoDTO.getProdutosId());
+        List<ProdutoEntity> produtos = produtoRepository.findAllByIdIn(pedidoDTO.getProdutosId());
         pedido.setProdutos(produtos);
 
         pedido.setStatusPedido(StatusPedido.RECEBIDO);
         pedido.setValorTotal(produtos.stream().map(ProdutoEntity::getPreco).reduce(0.0, Double::sum));
 
-        return Optional.of(pedido);
+        return pedido;
     }
 
     @Override
-    public PedidoEntity alterarPedido(Long id, PedidoDTO pedidoDTO) {
+    public Optional<PedidoEntity> alterarPedido(Long id, PedidoDTO pedidoDTO) {
         PedidoEntity pedidoEntity = this.pedidoRepository.findById(id).orElseThrow(IllegalArgumentException::new);
         pedidoEntity.setStatusPedido(pedidoDTO.getStatusPedido());
 
-        List<ProdutoEntity> produtos = produtoRepository.findAllById(pedidoDTO.getProdutosId());
+        List<ProdutoEntity> produtos = produtoRepository.findAllByIdIn(pedidoDTO.getProdutosId());
         pedidoEntity.setProdutos(produtos);
 
         pedidoEntity.setValorTotal(produtos.stream().map(ProdutoEntity::getPreco).reduce(0.0, Double::sum));
 
-        return pedidoRepository.save(pedidoEntity);
+        return Optional.of(pedidoRepository.save(pedidoEntity));
     }
 
     @Override

@@ -28,9 +28,9 @@ public class PedidoController {
         return produto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<PedidoEntity> alterarStatusPedido(@PathVariable Long id, @RequestBody PedidoDTO pedidoDTO) {
-        PedidoEntity produto = pedidoService.alterarPedido(id, pedidoDTO);
-        return ResponseEntity.ok().body(produto);
+        Optional<PedidoEntity> produto = pedidoService.alterarPedido(id, pedidoDTO);
+        return produto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

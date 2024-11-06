@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -33,7 +35,8 @@ public class ProdutoEntity {
     @Column(nullable = false)
     private CategoriaProduto categoria;
 
-    @ManyToOne
-    @JoinColumn(name = "pedido_id")
-    private PedidoEntity pedidoEntity;
+    @ManyToMany(mappedBy = "produtos")
+    @JsonIgnore
+    private List<PedidoEntity> pedidosEntity;
+
 }

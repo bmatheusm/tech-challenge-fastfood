@@ -68,3 +68,10 @@ Este repositório é dedicado ao **Tech Challenge**, um projeto interdisciplinar
 - 1 instância para execução da aplicação
 
 ---
+
+# Passo a passo para execução
+
+1. Após realizar o clone do projeto deve-se rodar o comando `mvn clean install` se atentando as versões do java e do maven suportadas pelo projeto de acordo com o tópico **Ambiente de Desenvolvimento** acima;
+2. Posteriormente, deve ser realizado o build da imagem docker da aplicação com o comando `docker build . -t fastfood-app:1` (o nome da imagem será usado no docker-compose.yml);
+3. Por fim, deve-se rodar o comando `docker compose up`;
+4. A aplicação estará disponível em http://localhost:8080/fastfood/swagger-ui/index.html.

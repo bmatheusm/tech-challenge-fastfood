@@ -11,7 +11,7 @@ public interface ProdutoRepository {
 
     List<ProdutoEntity> findAllByCategoria(CategoriaProduto categoriaProduto);
 
-    List<ProdutoEntity> findAllById(List<Long> ids);
+    List<ProdutoEntity> findAllByIdIn(List<Long> ids);
 
     ProdutoEntity save(ProdutoEntity produtoEntity);
 
