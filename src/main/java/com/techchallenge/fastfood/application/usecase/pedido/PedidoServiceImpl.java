@@ -5,6 +5,7 @@ import com.techchallenge.fastfood.adapters.driven.infra.entity.PedidoEntity;
 import com.techchallenge.fastfood.adapters.driven.infra.entity.ProdutoEntity;
 import com.techchallenge.fastfood.application.dto.PedidoDTO;
 import com.techchallenge.fastfood.application.port.in.pedido.PedidoService;
+import com.techchallenge.fastfood.domain.enums.StatusPagamento;
 import com.techchallenge.fastfood.domain.enums.StatusPedido;
 import com.techchallenge.fastfood.domain.repository.ClienteRepository;
 import com.techchallenge.fastfood.domain.repository.PedidoRepository;
@@ -55,14 +56,17 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Optional<PedidoEntity> alterarPedido(Long id, PedidoDTO pedidoDTO) {
         PedidoEntity pedidoEntity = this.pedidoRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        pedidoEntity.setStatusPedido(pedidoDTO.getStatusPedido());
+        if (pedidoEntity.getPagamento().getStatus().equals(StatusPagamento.APROVADO)) {
+            pedidoEntity.setStatusPedido(pedidoDTO.getStatusPedido());
 
-        List<ProdutoEntity> produtos = produtoRepository.findAllByIdIn(pedidoDTO.getProdutosId());
-        pedidoEntity.setProdutos(produtos);
+            List<ProdutoEntity> produtos = produtoRepository.findAllByIdIn(pedidoDTO.getProdutosId());
+            pedidoEntity.setProdutos(produtos);
 
-        pedidoEntity.setValorTotal(produtos.stream().map(ProdutoEntity::getPreco).reduce(0.0, Double::sum));
+            pedidoEntity.setValorTotal(produtos.stream().map(ProdutoEntity::getPreco).reduce(0.0, Double::sum));
 
-        return Optional.of(pedidoRepository.save(pedidoEntity));
+            return Optional.of(pedidoRepository.save(pedidoEntity));
+        }
+        return Optional.empty();
     }
 
     @Override

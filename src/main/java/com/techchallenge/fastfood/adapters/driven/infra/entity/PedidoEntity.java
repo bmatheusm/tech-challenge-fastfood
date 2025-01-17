@@ -1,5 +1,6 @@
 package com.techchallenge.fastfood.adapters.driven.infra.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.techchallenge.fastfood.domain.enums.StatusPedido;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,10 @@ public class PedidoEntity {
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private ClienteEntity cliente;
+
+    @OneToOne(mappedBy = "pedido")
+    @JsonIgnore
+    private PagamentoEntity pagamento;
 
     @ManyToMany
     @JoinTable(

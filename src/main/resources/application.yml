@@ -16,6 +16,9 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yml
     enabled: true
+external:
+  api:
+    url: http://localhost:8080/ #Aponta para a propria aplicação para simular o retorno do pagamento
 server:
   servlet:
     context-path: /fastfood
