@@ -1,7 +1,7 @@
-package com.techchallenge.fastfood.adapters.driver.api.controller;
+package com.techchallenge.fastfood.infrastructure.controller;
 
-import com.techchallenge.fastfood.application.dto.PagamentoDTO;
 import com.techchallenge.fastfood.application.port.in.pagamento.PagamentoService;
+import com.techchallenge.fastfood.infrastructure.dto.PagamentoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

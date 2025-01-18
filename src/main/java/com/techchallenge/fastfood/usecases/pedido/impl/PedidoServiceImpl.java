@@ -3,11 +3,12 @@ package com.techchallenge.fastfood.usecases.pedido.impl;
 import com.techchallenge.fastfood.domain.entities.ClienteEntity;
 import com.techchallenge.fastfood.domain.entities.PedidoEntity;
 import com.techchallenge.fastfood.domain.entities.ProdutoEntity;
-import com.techchallenge.fastfood.infrastructure.dto.PedidoDTO;
-import com.techchallenge.fastfood.infrastructure.enums.StatusPedido;
 import com.techchallenge.fastfood.gateways.repository.ClienteGateway;
 import com.techchallenge.fastfood.gateways.repository.PedidoGateway;
 import com.techchallenge.fastfood.gateways.repository.ProdutoGateway;
+import com.techchallenge.fastfood.infrastructure.dto.PedidoDTO;
+import com.techchallenge.fastfood.infrastructure.enums.StatusPagamento;
+import com.techchallenge.fastfood.infrastructure.enums.StatusPedido;
 import com.techchallenge.fastfood.usecases.pedido.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,14 +56,16 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Optional<PedidoEntity> alterarPedido(Long id, PedidoDTO pedidoDTO) {
         PedidoEntity pedidoEntity = this.pedidoGateway.findById(id).orElseThrow(IllegalArgumentException::new);
-        pedidoEntity.setStatusPedido(pedidoDTO.getStatusPedido());
+        if (pedidoEntity.getPagamento() != null && pedidoEntity.getPagamento().getStatus().equals(StatusPagamento.APROVADO)) {
+            pedidoEntity.setStatusPedido(pedidoDTO.getStatusPedido());
+            List<ProdutoEntity> produtos = produtoGateway.findAllByIdIn(pedidoDTO.getProdutosId());
+            pedidoEntity.setProdutos(produtos);
 
-        List<ProdutoEntity> produtos = produtoGateway.findAllByIdIn(pedidoDTO.getProdutosId());
-        pedidoEntity.setProdutos(produtos);
+            pedidoEntity.setValorTotal(produtos.stream().map(ProdutoEntity::getPreco).reduce(0.0, Double::sum));
 
-        pedidoEntity.setValorTotal(produtos.stream().map(ProdutoEntity::getPreco).reduce(0.0, Double::sum));
-
-        return Optional.of(pedidoGateway.save(pedidoEntity));
+            return Optional.of(pedidoGateway.save(pedidoEntity));
+        }
+        return Optional.empty();
     }
 
     @Override

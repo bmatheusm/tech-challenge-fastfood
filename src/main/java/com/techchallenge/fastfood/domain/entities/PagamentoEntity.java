@@ -1,7 +1,7 @@
-package com.techchallenge.fastfood.adapters.driven.infra.entity;
+package com.techchallenge.fastfood.domain.entities;
 
-import com.techchallenge.fastfood.domain.enums.FormaPagamento;
-import com.techchallenge.fastfood.domain.enums.StatusPagamento;
+import com.techchallenge.fastfood.infrastructure.enums.FormaPagamento;
+import com.techchallenge.fastfood.infrastructure.enums.StatusPagamento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

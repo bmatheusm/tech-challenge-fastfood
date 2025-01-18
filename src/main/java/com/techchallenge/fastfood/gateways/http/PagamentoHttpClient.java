@@ -1,6 +1,6 @@
-package com.techchallenge.fastfood.adapters.driven.http;
+package com.techchallenge.fastfood.gateways.http;
 
-import com.techchallenge.fastfood.adapters.driven.infra.entity.PagamentoEntity;
+import com.techchallenge.fastfood.domain.entities.PagamentoEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;

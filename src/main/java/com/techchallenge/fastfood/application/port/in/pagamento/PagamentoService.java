@@ -1,7 +1,7 @@
 package com.techchallenge.fastfood.application.port.in.pagamento;
 
-import com.techchallenge.fastfood.adapters.driven.infra.entity.PagamentoEntity;
-import com.techchallenge.fastfood.application.dto.PagamentoDTO;
+import com.techchallenge.fastfood.domain.entities.PagamentoEntity;
+import com.techchallenge.fastfood.infrastructure.dto.PagamentoDTO;
 
 public interface PagamentoService {
     void processaRetornoPagamento(PagamentoEntity pagamento);

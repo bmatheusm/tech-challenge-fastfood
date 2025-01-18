@@ -1,4 +1,4 @@
-package com.techchallenge.fastfood.adapters.driven.infra.config;
+package com.techchallenge.fastfood.infrastructure.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

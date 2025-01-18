@@ -1,13 +1,13 @@
 package com.techchallenge.fastfood.application.usecase.pagamento;
 
-import com.techchallenge.fastfood.adapters.driven.http.PagamentoHttpClient;
-import com.techchallenge.fastfood.adapters.driven.infra.entity.PagamentoEntity;
-import com.techchallenge.fastfood.adapters.driven.infra.entity.PedidoEntity;
-import com.techchallenge.fastfood.application.dto.PagamentoDTO;
 import com.techchallenge.fastfood.application.port.in.pagamento.PagamentoService;
-import com.techchallenge.fastfood.domain.enums.StatusPagamento;
-import com.techchallenge.fastfood.domain.repository.PagamentoRepository;
-import com.techchallenge.fastfood.domain.repository.PedidoRepository;
+import com.techchallenge.fastfood.domain.entities.PagamentoEntity;
+import com.techchallenge.fastfood.domain.entities.PedidoEntity;
+import com.techchallenge.fastfood.gateways.http.PagamentoHttpClient;
+import com.techchallenge.fastfood.gateways.repository.PagamentoGateway;
+import com.techchallenge.fastfood.gateways.repository.PedidoGateway;
+import com.techchallenge.fastfood.infrastructure.dto.PagamentoDTO;
+import com.techchallenge.fastfood.infrastructure.enums.StatusPagamento;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,23 +16,23 @@ import org.springframework.stereotype.Service;
 public class PagamentoServiceImpl implements PagamentoService {
 
     @Autowired
-    private PagamentoRepository pagamentoRepository;
+    private PagamentoGateway pagamentoGateway;
 
     @Autowired
     private PagamentoHttpClient pagamentoHttpClient;
 
     @Autowired
-    private PedidoRepository pedidoRepository;
+    private PedidoGateway pedidoGateway;
 
     @Override
     public void processaRetornoPagamento(PagamentoEntity pagamento) {
         pagamento.setStatus(StatusPagamento.APROVADO);
-        pagamentoRepository.save(pagamento);
+        pagamentoGateway.save(pagamento);
     }
 
     @Override
     public void fazPagamento(PagamentoDTO pagamento) {
-        PedidoEntity pedidoEntity = pedidoRepository.findById(pagamento.getIdPedido())
+        PedidoEntity pedidoEntity = pedidoGateway.findById(pagamento.getIdPedido())
                 .orElseThrow(() -> new EntityNotFoundException("Pedido com id " + pagamento.getIdPedido() + " não encontrado"));
 
         PagamentoEntity pagamentoEntity = new PagamentoEntity();
@@ -41,7 +41,7 @@ public class PagamentoServiceImpl implements PagamentoService {
         pagamentoEntity.setStatus(StatusPagamento.PENDENTE);
         pagamentoEntity.setPedido(pedidoEntity);
 
-        pagamentoRepository.save(pagamentoEntity);
+        pagamentoGateway.save(pagamentoEntity);
         pagamentoHttpClient.enviaPagamento(pagamentoEntity);
     }
 }

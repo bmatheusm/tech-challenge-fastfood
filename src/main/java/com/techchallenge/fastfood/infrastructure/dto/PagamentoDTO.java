@@ -1,6 +1,6 @@
-package com.techchallenge.fastfood.application.dto;
+package com.techchallenge.fastfood.infrastructure.dto;
 
-import com.techchallenge.fastfood.domain.enums.FormaPagamento;
+import com.techchallenge.fastfood.infrastructure.enums.FormaPagamento;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
