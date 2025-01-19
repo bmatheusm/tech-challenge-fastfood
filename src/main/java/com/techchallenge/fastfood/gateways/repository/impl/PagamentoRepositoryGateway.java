@@ -24,4 +24,9 @@ public class PagamentoRepositoryGateway implements PagamentoGateway {
     public boolean existsByPedidoIdAndPagamentoStatusAprovado(Long id) {
         return pagamentoRepository.existsByPedidoIdAndStatus(id, StatusPagamento.APROVADO);
     }
+
+    @Override
+    public PagamentoEntity findByPedidoId(Long id) {
+        return pagamentoRepository.findByPedidoId(id);
+    }
 }

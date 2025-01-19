@@ -1,6 +1,6 @@
 package com.techchallenge.fastfood.infrastructure.controller;
 
-import com.techchallenge.fastfood.application.port.in.pagamento.PagamentoService;
+import com.techchallenge.fastfood.usecases.pagamento.PagamentoService;
 import com.techchallenge.fastfood.domain.entities.PagamentoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

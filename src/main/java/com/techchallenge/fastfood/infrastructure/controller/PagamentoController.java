@@ -1,12 +1,10 @@
 package com.techchallenge.fastfood.infrastructure.controller;
 
-import com.techchallenge.fastfood.application.port.in.pagamento.PagamentoService;
 import com.techchallenge.fastfood.infrastructure.dto.PagamentoDTO;
+import com.techchallenge.fastfood.usecases.pagamento.PagamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/pagamento")
@@ -17,5 +15,10 @@ public class PagamentoController {
     @PostMapping("/pagar")
     public void enviaPagamento(@RequestBody PagamentoDTO payloadPagamento) {
         pagamentoService.fazPagamento(payloadPagamento);
+    }
+
+    @GetMapping("/{idPedido}")
+    public ResponseEntity<String> consultarStatusPagamentoPedido(@PathVariable Long idPedido) {
+        return ResponseEntity.ok(pagamentoService.consultarStatusPagamentoPedido(idPedido));
     }
 }

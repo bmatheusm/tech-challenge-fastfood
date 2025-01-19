@@ -8,4 +8,6 @@ public interface JpaPagamentoRepository extends JpaRepository<PagamentoEntity, L
 
     boolean existsByPedidoIdAndStatus(Long pedidoId, StatusPagamento status);
 
+    PagamentoEntity findByPedidoId(Long id);
+
 }

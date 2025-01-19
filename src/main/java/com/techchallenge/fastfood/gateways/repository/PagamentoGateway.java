@@ -6,4 +6,6 @@ public interface PagamentoGateway {
     PagamentoEntity save(PagamentoEntity pagamento);
 
     boolean existsByPedidoIdAndPagamentoStatusAprovado(Long id);
+
+    PagamentoEntity findByPedidoId(Long id);
 }

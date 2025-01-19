@@ -1,6 +1,5 @@
-package com.techchallenge.fastfood.application.usecase.pagamento;
+package com.techchallenge.fastfood.usecases.pagamento.impl;
 
-import com.techchallenge.fastfood.application.port.in.pagamento.PagamentoService;
 import com.techchallenge.fastfood.domain.entities.PagamentoEntity;
 import com.techchallenge.fastfood.domain.entities.PedidoEntity;
 import com.techchallenge.fastfood.gateways.http.PagamentoHttpClient;
@@ -8,6 +7,7 @@ import com.techchallenge.fastfood.gateways.repository.PagamentoGateway;
 import com.techchallenge.fastfood.gateways.repository.PedidoGateway;
 import com.techchallenge.fastfood.infrastructure.dto.PagamentoDTO;
 import com.techchallenge.fastfood.infrastructure.enums.StatusPagamento;
+import com.techchallenge.fastfood.usecases.pagamento.PagamentoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,5 +43,11 @@ public class PagamentoServiceImpl implements PagamentoService {
 
         pagamentoGateway.save(pagamentoEntity);
         pagamentoHttpClient.enviaPagamento(pagamentoEntity);
+    }
+
+    @Override
+    public String consultarStatusPagamentoPedido(Long idPedido) {
+        PagamentoEntity pagamentoEntity = pagamentoGateway.findByPedidoId(idPedido);
+        return pagamentoEntity.getStatus().name();
     }
 }
