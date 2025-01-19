@@ -2,6 +2,7 @@ package com.techchallenge.fastfood.gateways.repository.impl;
 
 import com.techchallenge.fastfood.domain.entities.PagamentoEntity;
 import com.techchallenge.fastfood.gateways.repository.PagamentoGateway;
+import com.techchallenge.fastfood.infrastructure.enums.StatusPagamento;
 import com.techchallenge.fastfood.infrastructure.repository.JpaPagamentoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,5 +18,10 @@ public class PagamentoRepositoryGateway implements PagamentoGateway {
     @Override
     public PagamentoEntity save(PagamentoEntity pagamento) {
         return pagamentoRepository.save(pagamento);
+    }
+
+    @Override
+    public boolean existsByPedidoIdAndPagamentoStatusAprovado(Long id) {
+        return pagamentoRepository.existsByPedidoIdAndStatus(id, StatusPagamento.APROVADO);
     }
 }

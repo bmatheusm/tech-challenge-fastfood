@@ -3,7 +3,9 @@ package com.techchallenge.fastfood.usecases.pedido.impl;
 import com.techchallenge.fastfood.domain.entities.ClienteEntity;
 import com.techchallenge.fastfood.domain.entities.PedidoEntity;
 import com.techchallenge.fastfood.domain.entities.ProdutoEntity;
+import com.techchallenge.fastfood.domain.exception.PagamentoPendenteException;
 import com.techchallenge.fastfood.gateways.repository.ClienteGateway;
+import com.techchallenge.fastfood.gateways.repository.PagamentoGateway;
 import com.techchallenge.fastfood.gateways.repository.PedidoGateway;
 import com.techchallenge.fastfood.gateways.repository.ProdutoGateway;
 import com.techchallenge.fastfood.infrastructure.dto.PedidoDTO;
@@ -27,6 +29,10 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Autowired
     private ClienteGateway clienteGateway;
+
+    @Autowired
+    private PagamentoGateway pagamentoGateway;
+
 
     @Override
     public List<PedidoEntity> listarTodos() {
@@ -69,7 +75,18 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public PedidoEntity finalizarPedido(Long id) {
-        return null;
+    public Optional<PedidoEntity> definirProximaOperacao(Long id) {
+        PedidoEntity pedidoEntity = this.pedidoGateway.findById(id).orElseThrow(IllegalArgumentException::new);
+        StatusPedido proximaOperacao = pedidoEntity.getStatusPedido().getNext();
+
+        boolean pagamentoAprovado = pagamentoGateway.existsByPedidoIdAndPagamentoStatusAprovado(pedidoEntity.getId());
+
+        if (StatusPedido.EM_PREPARACAO.equals(proximaOperacao) && !pagamentoAprovado) {
+            throw new PagamentoPendenteException(pedidoEntity.getId());
+        }
+
+        pedidoEntity.setStatusPedido(proximaOperacao);
+
+        return Optional.of(pedidoGateway.save(pedidoEntity));
     }
 }

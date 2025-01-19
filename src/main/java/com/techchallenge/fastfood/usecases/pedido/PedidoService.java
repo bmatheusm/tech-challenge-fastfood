@@ -14,6 +14,6 @@ public interface PedidoService {
 
     Optional<PedidoEntity> alterarPedido(Long id, PedidoDTO pedidoDTO);
 
-    PedidoEntity finalizarPedido(Long id);
+    Optional<PedidoEntity> definirProximaOperacao(Long id);
 
 }

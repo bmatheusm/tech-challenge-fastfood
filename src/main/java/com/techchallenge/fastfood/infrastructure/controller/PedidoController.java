@@ -33,4 +33,10 @@ public class PedidoController {
         Optional<PedidoEntity> produto = pedidoService.alterarPedido(id, pedidoDTO);
         return produto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @PutMapping("/proxima-operacao/{id}")
+    public ResponseEntity<PedidoEntity> definirProximaOperacao(@PathVariable Long id) {
+        Optional<PedidoEntity> produto = pedidoService.definirProximaOperacao(id);
+        return produto.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

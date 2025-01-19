@@ -1,5 +1,8 @@
 package com.techchallenge.fastfood.infrastructure.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum StatusPedido {
     RECEBIDO(1,"Recebido"),
     EM_PREPARACAO(2,"Em preparação"),
@@ -13,5 +16,10 @@ public enum StatusPedido {
     StatusPedido(int id, String descricao) {
         this.id = id;
         this.descricao = descricao;
+    }
+
+    public StatusPedido getNext() {
+        if (StatusPedido.FINALIZADO.equals(this) || StatusPedido.CANCELADO.equals(this)) return this;
+        return StatusPedido.values()[this.getId()+1];
     }
 }
