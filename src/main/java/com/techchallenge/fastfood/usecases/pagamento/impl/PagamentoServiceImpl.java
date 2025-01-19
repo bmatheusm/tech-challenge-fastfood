@@ -10,6 +10,8 @@ import com.techchallenge.fastfood.infrastructure.enums.StatusPagamento;
 import com.techchallenge.fastfood.usecases.pagamento.PagamentoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -46,8 +48,11 @@ public class PagamentoServiceImpl implements PagamentoService {
     }
 
     @Override
-    public String consultarStatusPagamentoPedido(Long idPedido) {
+    public ResponseEntity<String> consultarStatusPagamentoPedido(Long idPedido) {
         PagamentoEntity pagamentoEntity = pagamentoGateway.findByPedidoId(idPedido);
-        return pagamentoEntity.getStatus().name();
+        if (pagamentoEntity == null) {
+            return new ResponseEntity<>("Não existe pagamento para este pedido", HttpStatusCode.valueOf(400));
+        }
+        return ResponseEntity.ok(pagamentoEntity.getStatus().name());
     }
 }

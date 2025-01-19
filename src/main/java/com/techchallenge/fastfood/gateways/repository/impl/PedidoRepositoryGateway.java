@@ -6,6 +6,7 @@ import com.techchallenge.fastfood.infrastructure.repository.JpaPedidoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,17 @@ public class PedidoRepositoryGateway implements PedidoGateway {
 
     @Override
     public List<PedidoEntity> findAllToDisplay() {
-        return pedidoRepository.findAllToDisplay();
+        List<PedidoEntity> pedidos = pedidoRepository.findAllToDisplay();
+
+        return pedidos.stream()
+                .sorted(Comparator.comparing(
+                        (PedidoEntity p) -> p.getStatusPedido().getId(),
+                        Comparator.reverseOrder()
+                ).thenComparing(
+                        PedidoEntity::getCriadoEm,
+                        Comparator.reverseOrder()
+                ))
+                .toList();
     }
 
     @Override

@@ -19,6 +19,6 @@ public class PagamentoController {
 
     @GetMapping("/{idPedido}")
     public ResponseEntity<String> consultarStatusPagamentoPedido(@PathVariable Long idPedido) {
-        return ResponseEntity.ok(pagamentoService.consultarStatusPagamentoPedido(idPedido));
+        return pagamentoService.consultarStatusPagamentoPedido(idPedido);
     }
 }
