@@ -2,6 +2,9 @@ package com.techchallenge.fastfood.infrastructure.enums;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 @Getter
 public enum StatusPedido {
     RECEBIDO(1,"Recebido", 2),
@@ -21,6 +24,7 @@ public enum StatusPedido {
     }
 
     public StatusPedido getNext() {
-        return StatusPedido.values()[this.next];
+        return Arrays.stream(StatusPedido.values()).filter(status -> Objects.equals(this.next, status.getId()))
+                .findFirst().orElseThrow();
     }
 }
