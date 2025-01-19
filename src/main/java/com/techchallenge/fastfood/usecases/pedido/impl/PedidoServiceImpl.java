@@ -3,12 +3,13 @@ package com.techchallenge.fastfood.usecases.pedido.impl;
 import com.techchallenge.fastfood.domain.entities.ClienteEntity;
 import com.techchallenge.fastfood.domain.entities.PedidoEntity;
 import com.techchallenge.fastfood.domain.entities.ProdutoEntity;
-import com.techchallenge.fastfood.domain.exception.PagamentoPendenteException;
+import com.techchallenge.fastfood.domain.exception.BusinessException;
 import com.techchallenge.fastfood.gateways.repository.ClienteGateway;
 import com.techchallenge.fastfood.gateways.repository.PagamentoGateway;
 import com.techchallenge.fastfood.gateways.repository.PedidoGateway;
 import com.techchallenge.fastfood.gateways.repository.ProdutoGateway;
 import com.techchallenge.fastfood.infrastructure.dto.PedidoDTO;
+import com.techchallenge.fastfood.infrastructure.enums.ExceptionEnum;
 import com.techchallenge.fastfood.infrastructure.enums.StatusPagamento;
 import com.techchallenge.fastfood.infrastructure.enums.StatusPedido;
 import com.techchallenge.fastfood.usecases.pedido.PedidoService;
@@ -41,6 +42,7 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     public Optional<PedidoEntity> checkoutPedido(PedidoDTO pedidoDTO) {
+        if (pedidoDTO.getProdutosId().isEmpty()) throw new BusinessException(ExceptionEnum.PEDIDO_INVALIDO);
         return Optional.of(pedidoGateway.save(this.montaPedido(pedidoDTO)));
     }
 
@@ -82,7 +84,7 @@ public class PedidoServiceImpl implements PedidoService {
         boolean pagamentoAprovado = pagamentoGateway.existsByPedidoIdAndPagamentoStatusAprovado(pedidoEntity.getId());
 
         if (StatusPedido.EM_PREPARACAO.equals(proximaOperacao) && !pagamentoAprovado) {
-            throw new PagamentoPendenteException(pedidoEntity.getId());
+            throw new BusinessException(ExceptionEnum.PAGAMENTO_PENDENTE, pedidoEntity.getId().toString());
         }
 
         pedidoEntity.setStatusPedido(proximaOperacao);
