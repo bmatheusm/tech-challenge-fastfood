@@ -36,37 +36,14 @@ Este repositório é dedicado ao **Tech Challenge**, um projeto interdisciplinar
     - Sobremesa
 - **Acompanhamento de Pedidos**: Monitoramento dos pedidos em andamento e controle do tempo de espera.
 
-## Entregáveis Fase 1
-
-1. **Documentação do Sistema (DDD)**:
-    - Documentação utilizando **Event Storming** para os fluxos:
-        - Realização do pedido e pagamento
-        - Preparação e entrega do pedido
-
-2. **Aplicação Backend (Monolito)**:
-    - Arquitetura hexagonal.
-    - APIs (Swagger disponível para documentação):
-        - Cadastro e identificação de cliente via CPF
-        - CRUD de produtos e listagem por categoria
-        - Envio de produtos escolhidos para a fila (fake checkout)
-        - Listagem de pedidos
-    - Banco de dados:
-        - Organização e fila dos pedidos em banco de dados
-    - **Docker**:
-        - Dockerfile e docker-compose.yml configurados para execução e ambiente completo.
-
 ## Ambiente de Desenvolvimento
 
 - **Java 21**
+- **Docker / Kubernetes**
 - **Maven**: Apache Maven 3.9.9
 - **Banco de Dados**: PostgreSQL 17
     - Username: `postgres`
     - Password: `1234`
-
-**Limitações de Infraestrutura para a POC**:
-- 1 instância para o banco de dados
-- 1 instância para execução da aplicação
-
 ---
 
 # Passo a passo para execução
@@ -88,4 +65,3 @@ Este repositório é dedicado ao **Tech Challenge**, um projeto interdisciplinar
    2. produto-controller (cadastro, atualização, busca e deleção de produtos
    3. pedido-controller (cadastro, atualização e busca de pedidos)
    4. pagamento-controller (pagamento e verificação)
-   5. status-pagamento-webhook-controller (webhook)
