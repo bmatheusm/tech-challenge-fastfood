@@ -2,7 +2,7 @@ spring:
   application:
     name: fastfood
   datasource:
-    url: jdbc:postgresql://${FASTFOOD_DB_HOST}/${FASTFOOD_DB_NAME}
+    url: ${FASTFOOD_JDBC_URL}
     username: ${FASTFOOD_DB_USER}
     password: ${FASTFOOD_DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
