@@ -71,7 +71,15 @@ Este repositório é dedicado ao **Tech Challenge**, um projeto interdisciplinar
 
 # Passo a passo para execução
 
-1. Após realizar o clone do projeto deve-se rodar o comando `mvn clean install` se atentando as versões do java e do maven suportadas pelo projeto de acordo com o tópico **Ambiente de Desenvolvimento** acima;
-2. Posteriormente, deve ser realizado o build da imagem docker da aplicação com o comando `docker build . -t fastfood-app:1` (o nome da imagem será usado no docker-compose.yml);
-3. Por fim, deve-se rodar o comando `docker compose up`;
-4. A aplicação estará disponível em http://localhost:8080/fastfood/swagger-ui/index.html.
+1. Após realizar o clone do projeto deve-se primeiro se atentar as versões do java e do maven suportadas pelo projeto de acordo com o tópico **Ambiente de Desenvolvimento** acima;
+2. Posteriormente, basta rodar a seguinte sequência de scripts que seguem abaixo concatenados:
+```shell
+ kubectl apply -f k8s-infra/env/secret.yaml &
+ kubectl apply -f k8s-infra/env/configmap.yaml &
+ kubectl apply -f k8s-infra/db/postgresdb-statefulset.yaml &
+ kubectl apply -f k8s-infra/db/postgresdb-service.yaml &
+ kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-deployment.yaml &
+ kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-service.yaml & 
+ kubectl apply -f k8s-infra/hpa/fastfoodapi-hpa.yaml
+```
+3. A aplicação estará disponível em http://localhost:30001/fastfood/swagger-ui/index.html

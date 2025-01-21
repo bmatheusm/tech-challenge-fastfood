@@ -2,12 +2,17 @@ package com.techchallenge.fastfood.gateways.http;
 
 import com.techchallenge.fastfood.domain.entities.PagamentoEntity;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
 @Slf4j
 public class PagamentoHttpClient {
+
+    @Value("${external.api.endpoint}")
+    private String paymentApiEndpoint;
+
     private final WebClient webClient;
 
     public PagamentoHttpClient(WebClient webClient) {
@@ -16,7 +21,7 @@ public class PagamentoHttpClient {
 
     public void enviaPagamento(PagamentoEntity pagamento) {
         try {
-            webClient.post().uri("/fastfood/webhook/status-pagamento")
+            webClient.post().uri(paymentApiEndpoint)
                     .bodyValue(pagamento)
                     .retrieve()
                     .bodyToMono(String.class)
