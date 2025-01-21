@@ -13,6 +13,7 @@ import com.techchallenge.fastfood.infrastructure.enums.ExceptionEnum;
 import com.techchallenge.fastfood.infrastructure.enums.StatusPagamento;
 import com.techchallenge.fastfood.infrastructure.enums.StatusPedido;
 import com.techchallenge.fastfood.usecases.pedido.PedidoService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class PedidoServiceImpl implements PedidoService {
 
     @Autowired
@@ -64,16 +66,17 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Optional<PedidoEntity> alterarPedido(Long id, PedidoDTO pedidoDTO) {
         PedidoEntity pedidoEntity = this.pedidoGateway.findById(id).orElseThrow(IllegalArgumentException::new);
-        if (pedidoEntity.getPagamento() != null && pedidoEntity.getPagamento().getStatus().equals(StatusPagamento.APROVADO)) {
+
+        if (this.isStatusPedidoAlteravel(pedidoDTO.getStatusPedido(), pedidoEntity)) {
             pedidoEntity.setStatusPedido(pedidoDTO.getStatusPedido());
-            List<ProdutoEntity> produtos = produtoGateway.findAllByIdIn(pedidoDTO.getProdutosId());
-            pedidoEntity.setProdutos(produtos);
-
-            pedidoEntity.setValorTotal(produtos.stream().map(ProdutoEntity::getPreco).reduce(0.0, Double::sum));
-
-            return Optional.of(pedidoGateway.save(pedidoEntity));
         }
-        return Optional.empty();
+
+        List<ProdutoEntity> produtos = produtoGateway.findAllByIdIn(pedidoDTO.getProdutosId());
+        pedidoEntity.setProdutos(produtos);
+
+        pedidoEntity.setValorTotal(produtos.stream().map(ProdutoEntity::getPreco).reduce(0.0, Double::sum));
+
+        return Optional.of(pedidoGateway.save(pedidoEntity));
     }
 
     @Override
@@ -90,5 +93,12 @@ public class PedidoServiceImpl implements PedidoService {
         pedidoEntity.setStatusPedido(proximaOperacao);
 
         return Optional.of(pedidoGateway.save(pedidoEntity));
+    }
+
+    private boolean isStatusPedidoAlteravel(StatusPedido novoStatusPedido, PedidoEntity pedidoEntity) {
+        return novoStatusPedido != null &&
+                pedidoEntity.getStatusPedido() != novoStatusPedido &&
+                pedidoEntity.getPagamento() != null &&
+                pedidoEntity.getPagamento().getStatus().equals(StatusPagamento.APROVADO);
     }
 }
