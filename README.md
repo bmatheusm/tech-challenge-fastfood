@@ -72,4 +72,4 @@ Este repositório é dedicado ao **Tech Challenge**, um projeto interdisciplinar
 
 # Apresentação disponível no Youtube
 
-- https://www.youtube.com/watch?v=1v92ijLM1As
+- https://youtu.be/RzqLn-3XJow
