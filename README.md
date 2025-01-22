@@ -46,6 +46,10 @@ Este repositório é dedicado ao **Tech Challenge**, um projeto interdisciplinar
     - Password: `1234`
 ---
 
+# Diagrama de Arquitetura:
+
+![Desenho de arquitetura.jpg](documentacao%2FDesenho%20de%20arquitetura.jpg)
+
 # Passo a passo para execução
 
 1. Após realizar o clone do projeto deve-se primeiro se atentar as versões do java e do maven suportadas pelo projeto de acordo com o tópico **Ambiente de Desenvolvimento** acima;
@@ -65,3 +69,7 @@ Este repositório é dedicado ao **Tech Challenge**, um projeto interdisciplinar
    2. produto-controller (cadastro, atualização, busca e deleção de produtos
    3. pedido-controller (cadastro, atualização e busca de pedidos)
    4. pagamento-controller (pagamento e verificação)
+
+# Apresentação disponível no Youtube
+
+- https://www.youtube.com/watch?v=1v92ijLM1As
