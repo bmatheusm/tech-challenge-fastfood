@@ -42,10 +42,20 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            # Iniciar o Minikube se necessário
+            echo "Iniciando Minikube..."
+            minikube start
+
+            # Configurar o kubectl para usar o contexto Minikube
+            echo "Configuring kubectl to use minikube context..."
+            kubectl config use-context minikube
+
+            # Atualizando a imagem do Kubernetes
             echo "Atualizando imagem no Kubernetes..."
             kubectl set image deployment/fastfoodapi-deployment fastfoodapi-pod=rm359211/fastfood-app:$IMAGE_VERSION
             kubectl rollout status deployment/fastfoodapi-deployment
 
+            # Aplicando configurações do Kubernetes
             echo "Aplicando configurações do Kubernetes..."
             kubectl apply -f k8s-infra/env/secret.yaml
             kubectl apply -f k8s-infra/env/configmap.yaml
