@@ -42,21 +42,21 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # Iniciar o Minikube se necessário
-            echo "Iniciando Minikube..."
-            minikube start
+            # Iniciar Minikube com o driver Docker
+            echo "Iniciando Minikube com Docker..."
+            minikube start --driver=docker
 
             # Configurar o kubectl para usar o contexto Minikube
-            echo "Configuring kubectl to use minikube context..."
+            echo "Configurando kubectl para usar o contexto minikube..."
             kubectl config use-context minikube
 
-            # Atualizando a imagem do Kubernetes
+            # Atualizar a imagem no Kubernetes
             echo "Atualizando imagem no Kubernetes..."
             kubectl set image deployment/fastfoodapi-deployment fastfoodapi-pod=rm359211/fastfood-app:$IMAGE_VERSION
             kubectl rollout status deployment/fastfoodapi-deployment
 
-            # Aplicando configurações do Kubernetes
-            echo "Aplicando configurações do Kubernetes..."
+            # Aplicar as configurações no Kubernetes
+            echo "Aplicando configurações no Kubernetes..."
             kubectl apply -f k8s-infra/env/secret.yaml
             kubectl apply -f k8s-infra/env/configmap.yaml
             kubectl apply -f k8s-infra/db/postgresdb-statefulset.yaml
