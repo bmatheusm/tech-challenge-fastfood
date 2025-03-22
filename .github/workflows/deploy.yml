@@ -51,6 +51,11 @@ jobs:
               cd /home/ubuntu/fastfood-repo && git pull origin master
             fi
 
+            # Atualizar a imagem no Deployment com a nova versão
+            IMAGE_VERSION=${{ env.IMAGE_VERSION }}
+            echo "Atualizando fastfoodapi-deployment.yaml com a imagem rm359211/fastfood-app:$IMAGE_VERSION"
+            sed -i 's|image: rm359211/fastfood-app:.*|image: rm359211/fastfood-app:'"$IMAGE_VERSION"'|' /home/ubuntu/fastfood-repo/k8s-infra/fastfoodapi/fastfoodapi-deployment.yaml
+
             # Iniciar Minikube se necessário
             if ! minikube status | grep -q "Running"; then
               echo "Iniciando Minikube..."
