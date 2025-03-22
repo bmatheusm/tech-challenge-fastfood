@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: fastfoodapi-pod
-          image: rm359211/fastfood-app:2.0.0
+          image: rm359211/fastfood-app:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
