@@ -43,14 +43,16 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             # Clonar ou atualizar o repositório (caso os manifests estejam em outro repo)
-            if [ -d "fastfood-k8s" ]; then
-              cd fastfood-k8s && git pull && cd ..
+            if [ ! -d "/home/ubuntu/fastfood-repo" ]; then
+              echo "Repositório não encontrado, fazendo clone..."
+              git   clone https://github.com/bmatheusm/tech-challenge-fastfood.git  /home/ubuntu/fastfood-repo
             else
-              git clone https://github.com/seu-usuario/fastfood-k8s.git
+              echo "Repositório encontrado, fazendo pull..."
+              cd /home/ubuntu/fastfood-repo && git pull origin master
             fi
 
             # Substituir a versão da imagem no arquivo de deployment
-            yq -i '.spec.template.spec.containers[0].image = "rm359211/fastfood-app:'"$IMAGE_VERSION"'"' fastfood-k8s/k8s-infra/fastfoodapi/fastfoodapi-deployment.yaml
+            yq -i '.spec.template.spec.containers[0].image = "rm359211/fastfood-app:'"$IMAGE_VERSION"'"' fastfood-repo/k8s-infra/fastfoodapi/fastfoodapi-deployment.yaml
 
 
             # Iniciar Minikube se necessário
@@ -66,10 +68,10 @@ jobs:
 
             # Aplicar as configurações do Kubernetes
             echo "Aplicando configurações do Kubernetes..."
-            kubectl apply -f fastfood-k8s/k8s-infra/env/secret.yaml
-            kubectl apply -f fastfood-k8s/k8s-infra/env/configmap.yaml
-            kubectl apply -f fastfood-k8s/k8s-infra/db/postgresdb-statefulset.yaml
-            kubectl apply -f fastfood-k8s/k8s-infra/db/postgresdb-service.yaml
-            kubectl apply -f fastfood-k8s/k8s-infra/fastfoodapi/fastfoodapi-deployment.yaml
-            kubectl apply -f fastfood-k8s/k8s-infra/fastfoodapi/fastfoodapi-service.yaml
-            kubectl apply -f fastfood-k8s/k8s-infra/hpa/fastfoodapi-hpa.yaml
+            kubectl apply -f fastfood-repo/k8s-infra/env/secret.yaml
+            kubectl apply -f fastfood-repo/k8s-infra/env/configmap.yaml
+            kubectl apply -f fastfood-repo/k8s-infra/db/postgresdb-statefulset.yaml
+            kubectl apply -f fastfood-repo/k8s-infra/db/postgresdb-service.yaml
+            kubectl apply -f fastfood-repo/k8s-infra/fastfoodapi/fastfoodapi-deployment.yaml
+            kubectl apply -f fastfood-repo/k8s-infra/fastfoodapi/fastfoodapi-service.yaml
+            kubectl apply -f fastfood-repo/k8s-infra/hpa/fastfoodapi-hpa.yaml
