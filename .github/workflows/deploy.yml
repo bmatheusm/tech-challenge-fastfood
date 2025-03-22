@@ -44,13 +44,13 @@ jobs:
           script: |
             # Clonar ou atualizar o repositório (caso os manifests estejam em outro repo)
             if [ -d "fastfood-k8s" ]; then
-              cd fastfood-k8s && git pull && cd ..
+              cd tech-challenge-fastfood && git pull && cd ..
             else
-              git clone https://github.com/seu-usuario/fastfood-k8s.git
+              git clone https://github.com/bmatheusm/tech-challenge-fastfood.git
             fi
 
             # Substituir a versão da imagem no arquivo de deployment
-            yq -i '.spec.template.spec.containers[0].image = "rm359211/fastfood-app:'"$IMAGE_VERSION"'"' fastfood-k8s/k8s-infra/fastfoodapi/fastfoodapi-deployment.yaml
+            yq -i '.spec.template.spec.containers[0].image = "rm359211/fastfood-app:'"$IMAGE_VERSION"'"' tech-challenge-fastfood/k8s-infra/fastfoodapi/fastfoodapi-deployment.yaml
 
 
             # Iniciar Minikube se necessário
