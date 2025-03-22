@@ -64,10 +64,11 @@ jobs:
 
             # Aplicar as configurações do Kubernetes
             echo "Aplicando configurações do Kubernetes..."
-            kubectl apply -f fastfood-repo/k8s-infra/env/secret.yaml
-            kubectl apply -f fastfood-repo/k8s-infra/env/configmap.yaml
-            kubectl apply -f fastfood-repo/k8s-infra/db/postgresdb-statefulset.yaml
-            kubectl apply -f fastfood-repo/k8s-infra/db/postgresdb-service.yaml
-            kubectl apply -f fastfood-repo/k8s-infra/fastfoodapi/fastfoodapi-deployment.yaml
-            kubectl apply -f fastfood-repo/k8s-infra/fastfoodapi/fastfoodapi-service.yaml
-            kubectl apply -f fastfood-repo/k8s-infra/hpa/fastfoodapi-hpa.yaml
+            cd /home/ubuntu/fastfood-repo
+            kubectl apply -f k8s-infra/env/secret.yaml
+            kubectl apply -f k8s-infra/env/configmap.yaml
+            kubectl apply -f k8s-infra/db/postgresdb-statefulset.yaml
+            kubectl apply -f k8s-infra/db/postgresdb-service.yaml
+            kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-deployment.yaml
+            kubectl apply -f k8s-infra/fastfoodapi/fastfoodapi-service.yaml
+            kubectl apply -f k8s-infra/hpa/fastfoodapi-hpa.yaml
