@@ -52,7 +52,7 @@ jobs:
             fi
 
             # Substituir a versão da imagem no arquivo de deployment
-            yq -i '.spec.template.spec.containers[0].image = "rm359211/fastfood-app:'"$IMAGE_VERSION"'"' tech-challenge-fastfood/k8s-infra/fastfoodapi/fastfoodapi-deployment.yaml
+            yq -i '.spec.template.spec.containers[0].image = "rm359211/fastfood-app:'"$IMAGE_VERSION"'"' fastfood-repo/k8s-infra/fastfoodapi/fastfoodapi-deployment.yaml
 
 
             # Iniciar Minikube se necessário
