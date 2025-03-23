@@ -43,18 +43,18 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             # Clonar ou atualizar o repositório
-            if [ ! -d "/home/ubuntu/fastfood-repo" ]; then
+            if [ ! -d "/home/ubuntu/tech-challenge-fastfood" ]; then
               echo "Repositório não encontrado, fazendo clone..."
               git clone https://github.com/tech-challenge-fiap-9soat/tech-challenge-fastfood
             else
               echo "Repositório encontrado, fazendo pull..."
-              cd /home/ubuntu/fastfood-repo && git pull origin master
+              cd /home/ubuntu/tech-challenge-fastfood && git pull origin master
             fi
 
             # Atualizar a imagem no Deployment com a nova versão
             IMAGE_VERSION=${{ env.IMAGE_VERSION }}
             echo "Atualizando fastfoodapi-deployment.yaml com a imagem rm359211/fastfood-app:$IMAGE_VERSION"
-            sed -i 's|image: rm359211/fastfood-app:.*|image: rm359211/fastfood-app:'"$IMAGE_VERSION"'|' /home/ubuntu/fastfood-repo/k8s-infra/fastfoodapi/fastfoodapi-deployment.yaml
+            sed -i 's|image: rm359211/fastfood-app:.*|image: rm359211/fastfood-app:'"$IMAGE_VERSION"'|' /home/ubuntu/tech-challenge-fastfood/k8s-infra/fastfoodapi/fastfoodapi-deployment.yaml
 
             # Verificar se o Kind está rodando
             if ! kubectl cluster-info &> /dev/null; then
@@ -66,7 +66,7 @@ jobs:
 
             # Aplicar as configurações do Kubernetes
             echo "Aplicando configurações do Kubernetes..."
-            cd /home/ubuntu/fastfood-repo
+            cd /home/ubuntu/tech-challenge-fastfood
             kubectl apply -f k8s-infra/env/secret.yaml
             kubectl apply -f k8s-infra/env/configmap.yaml
             kubectl apply -f k8s-infra/db/postgresdb-statefulset.yaml
