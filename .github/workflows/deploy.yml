@@ -45,7 +45,7 @@ jobs:
             # Clonar ou atualizar o repositório
             if [ ! -d "/home/ubuntu/fastfood-repo" ]; then
               echo "Repositório não encontrado, fazendo clone..."
-              git clone https://github.com/bmatheusm/tech-challenge-fastfood.git /home/ubuntu/fastfood-repo
+              git clone https://github.com/tech-challenge-fiap-9soat/tech-challenge-fastfood
             else
               echo "Repositório encontrado, fazendo pull..."
               cd /home/ubuntu/fastfood-repo && git pull origin master
