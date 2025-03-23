@@ -20,7 +20,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build com Maven
-        run: mvn clean install -DskipTests  # Compila o projeto e cria o JAR
+        run: mvn clean install  # Compila o projeto e cria o JAR
 
       - name: Login no Docker Hub
         uses: docker/login-action@v2
