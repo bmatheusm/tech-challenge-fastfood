@@ -2,24 +2,13 @@ volumes:
   postgresql_data: {}
 
 services:
-  db:
-    image: postgres:latest
-    volumes:
-      - postgresql_data:/var/lib/postgresql
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: fastfood
   fastfood_app:
-    depends_on:
-      - db
     image: fastfood-app:1
     ports:
       - "8080:8080"
     restart: always
     environment:
-      FASTFOOD_DB_HOST: db:5432
+      FASTFOOD_DB_HOST: jdbc:postgresql://fastfood-db.cwurub6uddjh.us-east-1.rds.amazonaws.com:5432
       FASTFOOD_DB_USER: postgres
       FASTFOOD_DB_PASSWORD: 1234
       FASTFOOD_DB_NAME: fastfood
